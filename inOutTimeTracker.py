@@ -117,19 +117,21 @@ def main():
             time_diff_list.append(get_time_diff(time_out, time_in))
         if usr_input == "out of office":
             end_time = process_user_selection("out of office")
-    print("Day ended, ciao!")
+    print("--"*15)
+    print("\nDay ended, ciao!")
     
     ##Get total time between in of office and out of office.
     total_time = get_time_diff(":".join([str(t) for t in start_time]), end_time)
+    net_time = total_time
     
     ##substract time away from desk
     for d in time_diff_list:
-        net_time = total_time - d
+        net_time = net_time - d
     
     hours, remainder = divmod(net_time.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     endString = "\n\t\tNet time for day: [%s]" %":".join([str(t) for t in [hours, minutes, seconds]])
-    
+    print("\n\t\t%s" %endString)
     ##write final day net_time to file
     with open("day_times.txt", "a") as f:
         f.write(endString)
